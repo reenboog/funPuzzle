@@ -9,6 +9,7 @@ float GameCenterX           = kScreenWidth / 2.0f;
 float GameCenterY           = kScreenHeight / 2.0f;
 BOOL IsIPad                 = NO;
 BOOL CanDisplayChartBoost   = NO;
+BOOL IsLittleField          = NO;
 CGPoint GameCenterPos;
 
 CGPoint fieldPosition;

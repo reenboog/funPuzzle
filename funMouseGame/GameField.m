@@ -7,6 +7,7 @@
 //
 
 #import "GameField.h"
+#import "GameConfig.h"
 
 
 @implementation GameField
@@ -16,10 +17,15 @@
 		return nil;
 	}
 	
+    
 	data = [[NSMutableArray alloc] initWithCapacity:(_size*_size)];
 	size = _size;
 	
-	for (int i = 0; i < size*size; i++) {
+    //fieldSize = (IsLittleField ? kTotalChipsMini : kTotalChipsBig);
+    fieldSize = size * size;
+    NSLog(@"FIELDSIZE: %i", fieldSize);
+    
+	for (int i = 0; i < size * size; i++) {
 		NSNumber *n = [NSNumber numberWithInt:i];
 		[data addObject:n];
 	}
@@ -52,7 +58,8 @@
 	return [(NSNumber *)[data objectAtIndex:index] intValue];
 }
 
-- (BOOL) setX:(int) x Y:(int) y byValue:(int) value {
+- (BOOL) setX:(int) x Y:(int) y byValue:(int) value 
+{
 	if (![self isCorrectX:x Y:y]) {
 		return NO;
 	}
@@ -65,13 +72,16 @@
 }
 
 - (void) fill {
+    
+    
+    
 	for (int i = 0; i < size*size; i++) {
 		[data replaceObjectAtIndex:i withObject:[NSNumber numberWithInt:0]];
 	}
 	
-	for (int i = 1; i < size*size; i++) {
+	for (int i = 1; i < size * size; i++) {
 		while (true) {
-			int index = arc4random()%8;
+			int index = arc4random() % fieldSize; //f
 			
 			
 			

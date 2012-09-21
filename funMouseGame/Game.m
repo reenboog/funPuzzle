@@ -8,18 +8,19 @@
 
 #import "Game.h"
 #import "cocos2d.h"
-
+#import "GameConfig.h"
 
 @implementation Game
 
 // Singleton part
-static Game *gameInstance = nil;
+static Game* gameInstance = nil;
 
-+ (Game *) instance
++ (Game *) instanceWithFuckingSize: (NSInteger) fSize
 {
 	if (!gameInstance)
 	{
-		gameInstance = [[Game alloc] init];
+        CCLOG(@"FSIZE: %i", fSize);
+		gameInstance = [[Game alloc] initWithCountOfCells: fSize];
 	}
 	
 	return gameInstance;
@@ -28,6 +29,7 @@ static Game *gameInstance = nil;
 + (void) releaseInstance {
 	if (gameInstance) {
 		[gameInstance release];
+        gameInstance = nil;
 	}
 }
 
@@ -36,12 +38,14 @@ static Game *gameInstance = nil;
 @synthesize field;
 @synthesize gameIsEnded;
 
-- (id) init {
+- (id) initWithCountOfCells: (NSInteger) fSize {
 	if (![super init]) {
 		return nil;
 	}
-	
-	field = [[GameField alloc] initWithSize: kFieldSize];
+    
+    //CCLOG(@"Size: %i", fieldSize);
+	//собственно: тебе нужно пересоздавать игровое поле каждый раз при выборе
+	field = [[GameField alloc] initWithSize: fSize];
 	
 	[self newGame];
 	

@@ -10,6 +10,7 @@
 @interface GameField : NSObject {
 	NSMutableArray *data;
 	int size;
+    NSInteger fieldSize;
 }
 
 @property (nonatomic, readonly) int size;

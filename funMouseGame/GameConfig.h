@@ -53,13 +53,18 @@
 
 #define zBestResult         10
 
-#define kInfoBtnRelativeX (0.45)
+// 0.45
+
+#define kExitBtnRelativeX (-0.70)
+#define kExitBtnRelativeY 0 
+
+#define kInfoBtnRelativeX (-0.23)
 #define kInfoBtnRelativeY 0  
 
-#define kHelpBtnRelativeX 0
+#define kHelpBtnRelativeX (0.23)
 #define kHelpBtnRelativeY 0 
 
-#define kResetBtnRelativeX (-0.45)
+#define kResetBtnRelativeX (0.70)
 #define kResetBtnRelativeY 0 
 
 #define kRequestMoreAppsNotificationKey @"requestMoreApps"
@@ -72,17 +77,21 @@ extern float GameCenterY;
 extern CGPoint GameCenterPos;
 extern BOOL IsIPad;
 extern BOOL CanDisplayChartBoost;
+extern BOOL IsLittleField;
 
 extern CGPoint fieldPosition;
 
 
 // Chips
-#define kChipImageName @"chip%@%i.png"
+#define kChipImageName @"chip%@%@%i.png"
 
-#define kChipImageSize 100.0f
-#define kChipImageSizeHD 248.0f
+#define kChipImageSize          100.0f
+#define kChipImageSizeMini      75.0f
+#define kChipImageSizeHD        248.0f
+#define kChipImageSizeMiniHD    172.0f
 
-#define kTotalChips 9
+#define kTotalChipsMini 9
+#define kTotalChipsBig 16
 
 #endif // __GAME_CONFIG_H
 

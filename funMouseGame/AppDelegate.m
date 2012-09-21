@@ -7,8 +7,10 @@
 
 #import "AppDelegate.h"
 #import "GameConfig.h"
-#import "GameLayer.h"
+#import "MainMenuLayer.h"
 #import "RootViewController.h"
+
+#import <RevMobAds/RevMobAds.h>
 
 #import "Game.h"
 
@@ -50,6 +52,10 @@
 
 - (BOOL) application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [RevMobAds startSessionWithAppID: @"5055f4e0a9d19d0c0000001e"];
+    
+    [UIApplication sharedApplication].applicationIconBadgeNumber = 0;
+    
 //    return YES;
 //}
 //
@@ -61,10 +67,10 @@
 	window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     //apply global constants according to the device type
-    fieldPosition = ccp(GameCenterX - 100, GameCenterY - 100); // default for iPhone
+    /*fieldPosition = ccp(GameCenterX - 100, GameCenterY - 100); // default for iPhone*/
     
     IsIPad = (UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad);
-    if(IsIPad)
+   /* if(IsIPad)
     {
         GameWidth         = kScreenWidthHD;
         GameHeight        = kScreenHeightHD;
@@ -72,7 +78,7 @@
         GameCenterY       = GameHeight / 2.0f;
         
         fieldPosition = ccp(GameCenterX - 248, GameCenterY - 250);
-    }
+    }*/
     
     GameCenterPos   = ccp(GameCenterX, GameCenterY);
 	
@@ -149,7 +155,7 @@
 	[self removeStartupFlicker];
 	
 	// Run the intro Scene
-	[[CCDirector sharedDirector] runWithScene: [GameLayer scene]];
+	[[CCDirector sharedDirector] runWithScene: [MainMenuLayer scene]];
     
     [Apsalar startSession: @"McAppTeam" withKey: @"yrGJruOl"];
     
@@ -185,7 +191,12 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	[[CCDirector sharedDirector] resume];
+	
+    [RevMobAds showFullscreenAd];
+    
+    [self scheduleNotification];
+    
+    [[CCDirector sharedDirector] resume];
     
     ChartBoost *cb = [ChartBoost sharedChartBoost];
     cb.delegate = self;
@@ -298,5 +309,68 @@
 {
     [[ChartBoost sharedChartBoost] loadInterstitial];
 }
+
+#pragma mark -
+#pragma mark LocalNotifications
+
+- (void) scheduleNotification
+{
+    [[UIApplication sharedApplication] cancelAllLocalNotifications]; // cancelled all previous local notifications
+    
+    Class cls = NSClassFromString(@"UILocalNotification");
+    
+    if(cls != nil)
+    {
+        UILocalNotification *notif = [[cls alloc] init];
+        
+        notif.fireDate = [NSDate dateWithTimeInterval: 60.0f*60.0f*24.0f*3.0f sinceDate: [NSDate date]];
+        notif.timeZone = [NSTimeZone defaultTimeZone];
+        notif.alertBody = @"We've missed you";
+        notif.alertAction = @"PLAY";
+        notif.soundName = UILocalNotificationDefaultSoundName;
+        notif.applicationIconBadgeNumber = 1;
+        [[UIApplication sharedApplication] scheduleLocalNotification: notif];
+        
+        
+        notif.fireDate = [NSDate dateWithTimeInterval: 60.0f*60.0f*24.0f*7.0f sinceDate: [NSDate date]];
+        notif.timeZone = [NSTimeZone defaultTimeZone];
+        notif.alertBody = @"We've missed you";
+        notif.alertAction = @"PLAY";
+        notif.soundName = UILocalNotificationDefaultSoundName;
+        notif.applicationIconBadgeNumber = 2;
+        [[UIApplication sharedApplication] scheduleLocalNotification: notif];
+        
+        
+        notif.fireDate = [NSDate dateWithTimeInterval: 60.0f*60.0f*24.0f*15.0f sinceDate: [NSDate date]];
+        notif.timeZone = [NSTimeZone defaultTimeZone];
+        notif.alertBody = @"We've missed you";
+        notif.alertAction = @"PLAY";
+        notif.soundName = UILocalNotificationDefaultSoundName;
+        notif.applicationIconBadgeNumber = 3;
+        [[UIApplication sharedApplication] scheduleLocalNotification: notif];
+        
+        
+        notif.fireDate = [NSDate dateWithTimeInterval: 60.0f*60.0f*24.0f*30.0f sinceDate: [NSDate date]];
+        notif.timeZone = [NSTimeZone defaultTimeZone];
+        notif.alertBody = @"We've missed you";
+        notif.alertAction = @"PLAY";
+        notif.soundName = UILocalNotificationDefaultSoundName;
+        notif.applicationIconBadgeNumber = 2;
+        [[UIApplication sharedApplication] scheduleLocalNotification: notif];
+        
+        
+        notif.fireDate = [NSDate dateWithTimeInterval: 60.0f*60.0f*24.0f*60.0f sinceDate: [NSDate date]];
+        notif.timeZone = [NSTimeZone defaultTimeZone];
+        notif.alertBody = @"We've missed you";
+        notif.alertAction = @"PLAY";
+        notif.soundName = UILocalNotificationDefaultSoundName;
+        notif.applicationIconBadgeNumber = 2;
+        [[UIApplication sharedApplication] scheduleLocalNotification: notif];
+        
+        //NSLog(@"==LocalNotification: %@", notif);
+        //[notif release];
+    }
+}
+
 
 @end
